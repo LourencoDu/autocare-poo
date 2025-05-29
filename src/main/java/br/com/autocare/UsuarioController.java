@@ -1,11 +1,14 @@
 package br.com.autocare;
 
+import br.com.autocare.components.control.FormControl;
 import br.com.autocare.model.Usuario;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
-import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 
@@ -22,21 +25,38 @@ public class UsuarioController {
     }
 
     public Node getCadastrar() {
-        Label titulo = new Label("Usuário::Cadastrar");
-        titulo.setFont(Font.font("Inter", FontWeight.MEDIUM, 20));
-        titulo.setAlignment(Pos.TOP_LEFT);
+        Label titulo = new Label("Cadastro de Usuário");
+        titulo.setFont(Font.font("Inter", FontWeight.BOLD, 14));
 
-        HBox content = new HBox();
+        VBox content = new VBox(15);
+        content.setPadding(new Insets(5, 15, 5, 15));
         content.getChildren().add(titulo);
 
-//        Usuario u1 = new Usuario();
-//        u1.setNome("Eduardo");
-//        u1.setSobrenome("Lourenço da Silva");
-//        u1.setTelefone("13991538145");
-//        u1.setEmail("eduardo.lourenco2310@gmail.com");
-//        u1.setSenha("@Teste123");
-//
-//        u1.save();
+        FormControl nomeFC = new FormControl("Nome");
+        FormControl sobrenomeFC = new FormControl("Sobrenome");
+        FormControl telefoneFC = new FormControl("Telefone");
+        FormControl emailFC = new FormControl("Email");
+        FormControl senhaFC = new FormControl("Senha");
+
+        Button btnSubmit = new Button("Cadastrar");
+        btnSubmit.setOnAction(e -> {
+            String nome = nomeFC.getValue();
+            String sobrenome = sobrenomeFC.getValue();
+            String telefone = telefoneFC.getValue();
+            String email = emailFC.getValue();
+            String senha = senhaFC.getValue();
+
+            Usuario usuario = new Usuario();
+            usuario.setNome(nome);
+            usuario.setSobrenome(sobrenome);
+            usuario.setTelefone(telefone);
+            usuario.setEmail(email);
+            usuario.setSenha(senha);
+
+            usuario.save();
+        });
+
+        content.getChildren().addAll(nomeFC.getInput(), sobrenomeFC.getInput(), telefoneFC.getInput(), emailFC.getInput(), senhaFC.getInput(), btnSubmit);
 
         return content;
     }
