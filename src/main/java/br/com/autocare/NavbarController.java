@@ -18,29 +18,9 @@ public class NavbarController {
 
     private void setMenuUsuario() {
         Menu menuUsuario = new Menu("Usuário");
-
-        MenuItem itemListar = new MenuItem("Listar");
-        MenuItem itemCadastrar = new MenuItem("Cadastrar");
-        MenuItem itemAtualizar = new MenuItem("Atualizar");
-        MenuItem itemDeletar = new MenuItem("Deletar");
-
-        itemListar.setOnAction(e -> {
-            this.layout.setRota("usuario-listar");
+        menuUsuario.setOnAction(e -> {
+            this.layout.setRota("usuario");
         });
-
-        itemCadastrar.setOnAction(e -> {
-            this.layout.setRota("usuario-cadastrar");
-        });
-
-        itemAtualizar.setOnAction(e -> {
-            this.layout.setRota("usuario-atualizar");
-        });
-
-        itemDeletar.setOnAction(e -> {
-            this.layout.setRota("usuario-deletar");
-        });
-
-        menuUsuario.getItems().addAll(itemListar, itemCadastrar, itemAtualizar, itemDeletar);
 
         navbar.getMenus().addAll(menuUsuario);
     }
