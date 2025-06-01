@@ -10,12 +10,15 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 
 public class UsuarioController {
-    private UsuarioForm form;
-    private UsuarioTable table;
+    private final UsuarioForm form;
+    private final UsuarioTable table;
 
     public UsuarioController() {
-        this.form = new UsuarioForm();
         this.table = new UsuarioTable();
+        this.form = new UsuarioForm();
+
+        this.form.setTable(this.table);
+        this.table.setForm(this.form);
     }
 
     private HBox getTitulo() {
@@ -36,7 +39,7 @@ public class UsuarioController {
 
         HBox tituloBox = this.getTitulo();
 
-        HBox content = new HBox(15);
+        HBox content = new HBox(5);
         content.setMaxWidth(Double.MAX_VALUE);                 // permite expansão
         HBox.setHgrow(content, Priority.ALWAYS);               // para crescer horizontalmente
         VBox.setVgrow(content, Priority.ALWAYS);               // se quiser crescer em altura
@@ -45,7 +48,7 @@ public class UsuarioController {
         )));
 
         Node form = this.form.getForm();
-        Node table = this.table.getTable();
+        Node table = this.table.getTableNode();
 
         content.getChildren().addAll(form, table);
 

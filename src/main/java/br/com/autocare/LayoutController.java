@@ -23,7 +23,7 @@ public class LayoutController {
         Node navbar = (new NavbarController(this)).getNavBarNode();
         this.container.setTop(navbar);
 
-        Scene scene = new Scene(this.container, 960, 480);
+        Scene scene = new Scene(this.container, 1080, 600);
         this.stage.setScene(scene);
 
         this.stage.show();

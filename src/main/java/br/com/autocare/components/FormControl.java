@@ -1,4 +1,4 @@
-package br.com.autocare.components.control;
+package br.com.autocare.components;
 
 import javafx.geometry.Pos;
 import javafx.scene.Node;

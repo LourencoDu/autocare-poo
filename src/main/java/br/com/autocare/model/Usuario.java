@@ -2,6 +2,7 @@ package br.com.autocare.model;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Objects;
 import java.util.UUID;
 
 public class Usuario implements Serializable, Model {
@@ -98,17 +99,73 @@ public class Usuario implements Serializable, Model {
             this.id = UUID.randomUUID().toString();
             this.insert(this);
         } else {
-            //this.update(this);
+            this.update(this);
         }
 
         return this;
     }
 
-    @Override
     public Model insert(Model model) {
         ArrayList<Model> lista = this.select();
         lista.add(model);
 
+        this.salvarLista(lista);
+
+        return model;
+    }
+
+    public Model update(Model model) {
+        Usuario modelAtualizado = (Usuario) model;
+
+        ArrayList<Model> lista = this.select();
+        boolean atualizado = false;
+        int i = 0;
+
+        while (i < lista.size() && !atualizado) {
+            Usuario item = (Usuario) lista.get(i);
+
+            if (Objects.equals(item.getId(), modelAtualizado.getId())) {
+                lista.set(i, modelAtualizado);
+                atualizado = true;
+            }
+
+            i++;
+        }
+
+        if(atualizado) {
+            salvarLista(lista);
+        }
+
+        return model;
+    }
+
+    @Override
+    public boolean delete() {
+        ArrayList<Model> lista = this.select();
+        boolean excluido = false;
+        int i = 0;
+
+        while (i < lista.size() && !excluido) {
+            Usuario item = (Usuario) lista.get(i);
+
+            if (Objects.equals(item.getId(), this.getId())) {
+                lista.remove(i);
+                excluido = true;
+            }
+
+            i++;
+        }
+
+        if(excluido) {
+            salvarLista(lista);
+            return true;
+        }
+
+        return false;
+    }
+
+
+    private void salvarLista(ArrayList<Model> lista) {
         FileOutputStream f;
         try {
             File arq = new File(CAMINHO_ARQUIVO);
@@ -119,12 +176,8 @@ public class Usuario implements Serializable, Model {
             oos.writeObject(lista);
             oos.close();
             System.out.println("Lista salva com sucesso.");
-        } catch (FileNotFoundException e) {
-            System.err.println("Erro ao salvar lista: " + e.getMessage());
         } catch (IOException e) {
             System.err.println("Erro ao salvar lista: " + e.getMessage());
         }
-
-        return model;
     }
 }

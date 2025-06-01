@@ -13,7 +13,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 
-import br.com.autocare.components.control.FormControl;
+import br.com.autocare.components.FormControl;
 import br.com.autocare.model.Usuario;
 import br.com.autocare.model.Model;
 

@@ -1,6 +1,6 @@
 package br.com.autocare.usuario;
 
-import br.com.autocare.components.control.FormControl;
+import br.com.autocare.components.DeleteConfimAlert;
 import br.com.autocare.model.Model;
 import br.com.autocare.model.Usuario;
 import javafx.collections.FXCollections;
@@ -13,14 +13,28 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 
 import java.util.ArrayList;
 
 public class UsuarioTable {
-    public Node getTable() {
+
+    private final TableView<Usuario> table;
+    private final ObservableList<Usuario> dados;
+
+    private UsuarioForm form;
+
+    public UsuarioTable() {
+        this.table = new TableView<>();
+        this.dados = FXCollections.observableArrayList();
+    }
+
+    public void setForm(UsuarioForm form) {
+        this.form = form;
+    }
+
+    public Node getTableNode() {
         Label titulo = new Label("Listagem");
         titulo.setFont(Font.font("Inter", FontWeight.BOLD, 16));
         titulo.setMaxWidth(Double.MAX_VALUE);
@@ -30,10 +44,6 @@ public class UsuarioTable {
         content.setFillWidth(true);  // Permite que filhos usem a largura completa
         content.setMaxWidth(Double.MAX_VALUE);
 
-        Usuario usuario = new Usuario();
-        ArrayList<Model> lista = usuario.select();
-
-        TableView<Usuario> table = new TableView<>();
         table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY); // Faz as colunas se ajustarem automaticamente
         table.setMaxWidth(Double.MAX_VALUE);
         table.setPrefWidth(900);
@@ -54,6 +64,21 @@ public class UsuarioTable {
         TableColumn<Usuario, String> emailColumn = new TableColumn<>("E-mail");
         emailColumn.setCellValueFactory(new PropertyValueFactory<>("email"));
 
+        TableColumn<Usuario, Void> acaoColumn = getAcoesColumn(this.form, this);
+
+        // Adiciona colunas
+        table.getColumns().addAll(idColumn, nomeColumn, sobrenomeColumn, telefoneColumn, emailColumn, acaoColumn);
+
+        updateDados();
+
+        // Faz com que a tabela ocupe toda a largura disponível no VBox
+        VBox.setVgrow(table, Priority.ALWAYS);
+
+        content.getChildren().addAll(titulo, table);
+        return content;
+    }
+
+    private TableColumn<Usuario, Void> getAcoesColumn(UsuarioForm form, UsuarioTable table) {
         // Coluna de ações
         TableColumn<Usuario, Void> acaoColumn = new TableColumn<>("Ações");
         acaoColumn.setCellFactory(coluna -> new TableCell<>() {
@@ -65,12 +90,18 @@ public class UsuarioTable {
                 box.setAlignment(Pos.CENTER);
                 btnEditar.setOnAction(event -> {
                     Usuario usuario = getTableView().getItems().get(getIndex());
-                    // ação editar
+                    if(form != null) {
+                        form.setUsuario(usuario);
+                    }
                 });
 
                 btnExcluir.setOnAction(event -> {
                     Usuario usuario = getTableView().getItems().get(getIndex());
-                    // ação excluir
+
+                    if(DeleteConfimAlert.deleteConfirm()) {
+                        usuario.delete();
+                        table.updateDados();
+                    }
                 });
             }
 
@@ -81,22 +112,19 @@ public class UsuarioTable {
             }
         });
 
-        // Adiciona colunas
-        table.getColumns().addAll(idColumn, nomeColumn, sobrenomeColumn, telefoneColumn, emailColumn, acaoColumn);
+        return acaoColumn;
+    }
 
-        // Dados
-        ObservableList<Usuario> dados = FXCollections.observableArrayList();
+    public void updateDados() {
+        Usuario usuario = new Usuario();
+        ArrayList<Model> lista = usuario.select();
+
+        this.dados.clear();
+
         for (Model item : lista) {
             dados.add((Usuario) item);
         }
 
         table.setItems(dados);
-
-        // Faz com que a tabela ocupe toda a largura disponível no VBox
-        VBox.setVgrow(table, Priority.ALWAYS);
-
-        content.getChildren().addAll(titulo, table);
-        return content;
     }
-
 }
