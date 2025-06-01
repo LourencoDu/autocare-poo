@@ -46,7 +46,7 @@ public class UsuarioTable {
 
         table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY); // Faz as colunas se ajustarem automaticamente
         table.setMaxWidth(Double.MAX_VALUE);
-        table.setPrefWidth(900);
+        table.setPrefWidth(1920);
 
         // Colunas
         TableColumn<Usuario, String> idColumn = new TableColumn<>("ID");
@@ -64,7 +64,7 @@ public class UsuarioTable {
         TableColumn<Usuario, String> emailColumn = new TableColumn<>("E-mail");
         emailColumn.setCellValueFactory(new PropertyValueFactory<>("email"));
 
-        TableColumn<Usuario, Void> acaoColumn = getAcoesColumn(this.form, this);
+        TableColumn<Usuario, Void> acaoColumn = getAcoesColumn(this.form);
 
         // Adiciona colunas
         table.getColumns().addAll(idColumn, nomeColumn, sobrenomeColumn, telefoneColumn, emailColumn, acaoColumn);
@@ -78,39 +78,12 @@ public class UsuarioTable {
         return content;
     }
 
-    private TableColumn<Usuario, Void> getAcoesColumn(UsuarioForm form, UsuarioTable table) {
+    private TableColumn<Usuario, Void> getAcoesColumn(UsuarioForm form) {
         // Coluna de ações
+        UsuarioTable table = this;
+
         TableColumn<Usuario, Void> acaoColumn = new TableColumn<>("Ações");
-        acaoColumn.setCellFactory(coluna -> new TableCell<>() {
-            private final Button btnEditar = new Button("Editar");
-            private final Button btnExcluir = new Button("Excluir");
-            private final HBox box = new HBox(5, btnEditar, btnExcluir);
-
-            {
-                box.setAlignment(Pos.CENTER);
-                btnEditar.setOnAction(event -> {
-                    Usuario usuario = getTableView().getItems().get(getIndex());
-                    if(form != null) {
-                        form.setUsuario(usuario);
-                    }
-                });
-
-                btnExcluir.setOnAction(event -> {
-                    Usuario usuario = getTableView().getItems().get(getIndex());
-
-                    if(DeleteConfimAlert.deleteConfirm()) {
-                        usuario.delete();
-                        table.updateDados();
-                    }
-                });
-            }
-
-            @Override
-            protected void updateItem(Void item, boolean empty) {
-                super.updateItem(item, empty);
-                setGraphic(empty ? null : box);
-            }
-        });
+        acaoColumn.setCellFactory(coluna -> new UsuarioTableButtonsCell(this.form, this));
 
         return acaoColumn;
     }
