@@ -28,7 +28,7 @@ public class LayoutController {
 
         this.stage.show();
 
-         this.setRota("usuario");
+         this.setRota(this.rota);
     }
 
     public void setRota(String rota) {
