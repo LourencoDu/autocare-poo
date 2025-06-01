@@ -36,6 +36,7 @@ public class UsuarioForm {
         this.idInput = this.idFC.getInput();
         this.idInput.setVisible(false);
         this.idInput.setManaged(false);
+        this.idInput.setDisable(true);
 
         this.nomeFC = new FormControl("Nome");
         this.sobrenomeFC = new FormControl("Sobrenome");
