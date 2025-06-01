@@ -3,6 +3,7 @@ package br.com.autocare;
 import br.com.autocare.usuario.UsuarioController;
 import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
@@ -36,6 +37,7 @@ public class LayoutController {
 
         switch (rota) {
             case "usuario" -> this.container.setCenter((new UsuarioController()).show());
+            case "exemplo" -> this.container.setCenter(new Label("Exemplo"));
         }
     }
 }

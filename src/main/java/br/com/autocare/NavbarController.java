@@ -17,12 +17,21 @@ public class NavbarController {
     }
 
     private void setMenuUsuario() {
-        Menu menuUsuario = new Menu("Usuário");
-        menuUsuario.setOnAction(e -> {
+        Menu menu = new Menu("Escolher classe");
+
+        MenuItem mItemUsuario = new MenuItem("Usuário");
+        mItemUsuario.setOnAction(e -> {
             this.layout.setRota("usuario");
         });
+        menu.getItems().add(mItemUsuario);
 
-        navbar.getMenus().addAll(menuUsuario);
+        MenuItem mItemExemplo = new MenuItem("Exemplo");
+        mItemExemplo.setOnAction(e -> {
+            this.layout.setRota("exemplo");
+        });
+        menu.getItems().add(mItemExemplo);
+
+        navbar.getMenus().addAll(menu);
     }
 
     public Node getNavBarNode() {
