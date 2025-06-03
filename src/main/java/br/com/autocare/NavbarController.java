@@ -30,6 +30,11 @@ public class NavbarController {
             this.layout.setRota("exemplo");
         });
         menu.getItems().add(mItemExemplo);
+        MenuItem  mItemfuncionariomapa= new MenuItem("Funcionariomapa");
+        mItemfuncionariomapa.setOnAction(e -> {
+            this.layout.setRota("funcionariomapa");
+        });
+        menu.getItems().add(mItemfuncionariomapa);
 
         navbar.getMenus().addAll(menu);
     }

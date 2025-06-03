@@ -1,5 +1,7 @@
 package br.com.autocare;
 
+import br.com.autocare.FuncionarioMapa.FuncionarioMapaController;
+import br.com.autocare.model.FuncionarioMapa;
 import br.com.autocare.usuario.UsuarioController;
 import javafx.scene.Node;
 import javafx.scene.Scene;
@@ -37,6 +39,7 @@ public class LayoutController {
 
         switch (rota) {
             case "usuario" -> this.container.setCenter((new UsuarioController()).show());
+            case "funcionariomapa" -> this.container.setCenter((new FuncionarioMapaController()).show());
             case "exemplo" -> this.container.setCenter(new Label("Exemplo"));
         }
     }

@@ -5,10 +5,10 @@ import java.util.ArrayList;
 import java.util.Objects;
 import java.util.UUID;
 
-public class PrestadorMapa implements Serializable, Model {
+public class FuncionarioMapa implements Serializable, Model {
     private static final long serialVersionUID = 1L;
 
-    private static final String CAMINHO_ARQUIVO = "usuario.dat";
+    private static final String CAMINHO_ARQUIVO = "funcionariomapa.dat";
 
     private String id;
     private String nome;
@@ -17,9 +17,9 @@ public class PrestadorMapa implements Serializable, Model {
     private String senha;
     private String localizacao;
 
-    public PrestadorMapa() {}
+    public FuncionarioMapa() {}
 
-    public PrestadorMapa(String id, String nome, String telefone, String email, String senha,String localizacao) {
+    public FuncionarioMapa(String id, String nome, String telefone, String email, String senha,String localizacao) {
         this.id = id;
         this.nome = nome;
         this.telefone = telefone;
@@ -96,7 +96,7 @@ public class PrestadorMapa implements Serializable, Model {
     }
 
     @Override
-    public PrestadorMapa save() {
+    public FuncionarioMapa save() {
         if(this.id == null) {
             this.id = UUID.randomUUID().toString();
             this.insert(this);
