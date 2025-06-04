@@ -37,6 +37,7 @@ public class FuncionarioMapaController {
         container.setPadding(new Insets(5, 15, 15, 15));
         container.setPrefWidth(Double.MAX_VALUE);
 
+
         HBox tituloBox = this.getTitulo();
 
         HBox content = new HBox(5);

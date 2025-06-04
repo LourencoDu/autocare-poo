@@ -19,7 +19,7 @@ public class FuncionarioMapa implements Serializable, Model {
 
     public FuncionarioMapa() {}
 
-    public FuncionarioMapa(String id, String nome, String telefone, String email, String senha,String localizacao) {
+    public FuncionarioMapa(String id, String nome, String telefone, String email, String senha, String localizacao) {
         this.id = id;
         this.nome = nome;
         this.telefone = telefone;
@@ -39,8 +39,6 @@ public class FuncionarioMapa implements Serializable, Model {
     public void setNome(String nome) {
         this.nome = nome;
     }
-
-
 
     public String getTelefone() {
         return telefone;
@@ -76,13 +74,18 @@ public class FuncionarioMapa implements Serializable, Model {
 
     @Override
     public String toString() {
-        return "Usuário\nID: " + this.id + "\nNome: " + this.nome + "\nTelefone: " + this.telefone + "\nE-mail: " + this.email + "\nSenha: " + this.senha + "localizacao\n: " + this.localizacao;
+        return "Funcionário\nID: " + this.id +
+                "\nNome: " + this.nome +
+                "\nTelefone: " + this.telefone +
+                "\nE-mail: " + this.email +
+                "\nSenha: " + this.senha +
+                "\nLocalização: " + this.localizacao;
     }
 
     @Override
     public ArrayList<Model> select() {
         ArrayList<Model> lista = new ArrayList<>();
-        try  {
+        try {
             File arq = new File(CAMINHO_ARQUIVO);
             if (arq.exists()) {
                 ObjectInputStream ois = new ObjectInputStream(new FileInputStream(CAMINHO_ARQUIVO));
@@ -97,7 +100,7 @@ public class FuncionarioMapa implements Serializable, Model {
 
     @Override
     public FuncionarioMapa save() {
-        if(this.id == null) {
+        if (this.id == null) {
             this.id = UUID.randomUUID().toString();
             this.insert(this);
         } else {
@@ -110,21 +113,19 @@ public class FuncionarioMapa implements Serializable, Model {
     public Model insert(Model model) {
         ArrayList<Model> lista = this.select();
         lista.add(model);
-
         this.salvarLista(lista);
-
         return model;
     }
 
     public Model update(Model model) {
-        Usuario modelAtualizado = (Usuario) model;
+        FuncionarioMapa modelAtualizado = (FuncionarioMapa) model;
 
         ArrayList<Model> lista = this.select();
         boolean atualizado = false;
         int i = 0;
 
         while (i < lista.size() && !atualizado) {
-            Usuario item = (Usuario) lista.get(i);
+            FuncionarioMapa item = (FuncionarioMapa) lista.get(i);
 
             if (Objects.equals(item.getId(), modelAtualizado.getId())) {
                 lista.set(i, modelAtualizado);
@@ -134,7 +135,7 @@ public class FuncionarioMapa implements Serializable, Model {
             i++;
         }
 
-        if(atualizado) {
+        if (atualizado) {
             salvarLista(lista);
         }
 
@@ -148,7 +149,7 @@ public class FuncionarioMapa implements Serializable, Model {
         int i = 0;
 
         while (i < lista.size() && !excluido) {
-            Usuario item = (Usuario) lista.get(i);
+            FuncionarioMapa item = (FuncionarioMapa) lista.get(i);
 
             if (Objects.equals(item.getId(), this.getId())) {
                 lista.remove(i);
@@ -158,7 +159,7 @@ public class FuncionarioMapa implements Serializable, Model {
             i++;
         }
 
-        if(excluido) {
+        if (excluido) {
             salvarLista(lista);
             return true;
         }
@@ -166,9 +167,7 @@ public class FuncionarioMapa implements Serializable, Model {
         return false;
     }
 
-
     private void salvarLista(ArrayList<Model> lista) {
-        FileOutputStream f;
         try {
             File arq = new File(CAMINHO_ARQUIVO);
             if (!arq.exists()) {

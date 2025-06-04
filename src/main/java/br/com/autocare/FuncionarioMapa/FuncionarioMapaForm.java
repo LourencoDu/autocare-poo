@@ -21,7 +21,6 @@ public class FuncionarioMapaForm {
     private final FormControl idFC;
     private final Node idInput;
     private final FormControl nomeFC;
-    private final FormControl sobrenomeFC;
     private final FormControl telefoneFC;
     private final FormControl emailFC;
     private final FormControl senhaFC;
@@ -37,7 +36,6 @@ public class FuncionarioMapaForm {
         this.idInput.setDisable(true);
 
         this.nomeFC = new FormControl("Nome");
-        this.sobrenomeFC = new FormControl("Sobrenome");
         this.telefoneFC = new FormControl("Telefone");
         this.emailFC = new FormControl("E-mail");
         this.senhaFC = new FormControl("Senha");
@@ -61,7 +59,6 @@ public class FuncionarioMapaForm {
     private void clearFormValues() {
         idFC.setValue("");
         nomeFC.setValue("");
-        sobrenomeFC.setValue("");
         telefoneFC.setValue("");
         emailFC.setValue("");
         senhaFC.setValue("");
@@ -78,7 +75,6 @@ public class FuncionarioMapaForm {
         content.setPadding(new Insets(5, 15, 15, 15));
 
         Node nomeInput = nomeFC.getInput();
-        Node sobrenomeInput = sobrenomeFC.getInput();
         Node telefoneInput = telefoneFC.getInput();
         Node emailInput = emailFC.getInput();
         Node senhaInput = senhaFC.getPasswordInput();
@@ -87,12 +83,11 @@ public class FuncionarioMapaForm {
 
         this.submitBtn.setOnAction(e -> {
             String nome = nomeFC.getValue();
-            String sobrenome = sobrenomeFC.getValue();
             String telefone = telefoneFC.getValue();
             String email = emailFC.getValue();
             String senha = senhaFC.getValue();
 
-            if (!nome.isEmpty() && !sobrenome.isEmpty() && !telefone.isEmpty() && !email.isEmpty() && !senha.isEmpty()) {
+            if (!nome.isEmpty() && !telefone.isEmpty() && !email.isEmpty() && !senha.isEmpty()) {
                 setValidacaoLabel("", Color.RED);
                 try {
                     FuncionarioMapa funcionario = this.funcionario != null ? this.funcionario : new FuncionarioMapa();
@@ -129,7 +124,7 @@ public class FuncionarioMapaForm {
         HBox buttons = new HBox(submitBtn);
 
         content.getChildren().add(titulo);
-        content.getChildren().addAll(idInput, nomeInput, sobrenomeInput, telefoneInput, emailInput, senhaInput, validacaoLabel, buttons);
+        content.getChildren().addAll(idInput, nomeInput, telefoneInput, emailInput, senhaInput, validacaoLabel, buttons);
 
         this.form = content;
     }
