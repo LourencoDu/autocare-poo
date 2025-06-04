@@ -65,9 +65,13 @@ public class FuncionarioMapaTable {
         TableColumn<FuncionarioMapa, String> emailColumn = new TableColumn<>("E-mail");
         emailColumn.setCellValueFactory(new PropertyValueFactory<>("email"));
 
+        TableColumn<FuncionarioMapa, String> localizacaoColumn = new TableColumn<>("Localização");
+        localizacaoColumn.setCellValueFactory(new PropertyValueFactory<>("localizacao"));
+
+
         TableColumn<FuncionarioMapa, Void> acaoColumn = getAcoesColumn(this.form);
 
-        table.getColumns().addAll(idColumn, nomeColumn, telefoneColumn, emailColumn, acaoColumn);
+        table.getColumns().addAll(idColumn, nomeColumn, telefoneColumn, emailColumn, localizacaoColumn, acaoColumn);
 
         updateDados();
 

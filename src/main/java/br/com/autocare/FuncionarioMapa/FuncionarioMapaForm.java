@@ -2,9 +2,12 @@ package br.com.autocare.FuncionarioMapa;
 
 import br.com.autocare.components.FormControl;
 import br.com.autocare.model.FuncionarioMapa;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -25,6 +28,9 @@ public class FuncionarioMapaForm {
     private final FormControl emailFC;
     private final FormControl senhaFC;
 
+    // **ComboBox de Estados Brasileiros**
+    private final ComboBox<String> estadosCombo;
+
     private final Label validacaoLabel;
     private final Button submitBtn;
 
@@ -39,6 +45,39 @@ public class FuncionarioMapaForm {
         this.telefoneFC = new FormControl("Telefone");
         this.emailFC = new FormControl("E-mail");
         this.senhaFC = new FormControl("Senha");
+
+        // --- Inicializa ComboBox com todos os estados +
+        ObservableList<String> estados = FXCollections.observableArrayList(
+                "Acre",
+                "Alagoas",
+                "Amapá",
+                "Amazonas",
+                "Bahia",
+                "Ceará",
+                "Distrito Federal",
+                "Espírito Santo",
+                "Goiás",
+                "Maranhão",
+                "Mato Grosso",
+                "Mato Grosso do Sul",
+                "Minas Gerais",
+                "Pará",
+                "Paraíba",
+                "Paraná",
+                "Pernambuco",
+                "Piauí",
+                "Rio de Janeiro",
+                "Rio Grande do Norte",
+                "Rio Grande do Sul",
+                "Rondônia",
+                "Roraima",
+                "Santa Catarina",
+                "São Paulo",
+                "Sergipe",
+                "Tocantins"
+        );
+        this.estadosCombo = new ComboBox<>(estados);
+        this.estadosCombo.setPromptText("Selecione o Estado");
 
         this.validacaoLabel = new Label("");
         validacaoLabel.setFont(Font.font("Inter", FontWeight.MEDIUM, 14));
@@ -62,6 +101,7 @@ public class FuncionarioMapaForm {
         telefoneFC.setValue("");
         emailFC.setValue("");
         senhaFC.setValue("");
+        estadosCombo.setValue(null);
         setFuncionario(null);
     }
 
@@ -86,8 +126,9 @@ public class FuncionarioMapaForm {
             String telefone = telefoneFC.getValue();
             String email = emailFC.getValue();
             String senha = senhaFC.getValue();
+            String localizacao = estadosCombo.getValue(); // <-- pega o estado selecionado
 
-            if (!nome.isEmpty() && !telefone.isEmpty() && !email.isEmpty() && !senha.isEmpty()) {
+            if (!nome.isEmpty() && !telefone.isEmpty() && !email.isEmpty() && !senha.isEmpty() && localizacao != null) {
                 setValidacaoLabel("", Color.RED);
                 try {
                     FuncionarioMapa funcionario = this.funcionario != null ? this.funcionario : new FuncionarioMapa();
@@ -95,6 +136,7 @@ public class FuncionarioMapaForm {
                     funcionario.setTelefone(telefone);
                     funcionario.setEmail(email);
                     funcionario.setSenha(senha);
+                    funcionario.setLocalizacao(localizacao);  // <-- define no model
 
                     funcionario.save();
 
@@ -117,14 +159,24 @@ public class FuncionarioMapaForm {
                     }
                 }
             } else {
-                setValidacaoLabel("Preencha todos os campos!", Color.RED);
+                setValidacaoLabel("Preencha todos os campos e selecione um estado!", Color.RED);
             }
         });
 
         HBox buttons = new HBox(submitBtn);
 
         content.getChildren().add(titulo);
-        content.getChildren().addAll(idInput, nomeInput, telefoneInput, emailInput, senhaInput, validacaoLabel, buttons);
+        content.getChildren().addAll(
+                idInput,
+                nomeInput,
+                telefoneInput,
+                emailInput,
+                senhaInput,
+                new Label("Localização"),   // rótulo para o ComboBox
+                estadosCombo,               // adiciona aqui o ComboBox de estados
+                validacaoLabel,
+                buttons
+        );
 
         this.form = content;
     }
@@ -141,9 +193,11 @@ public class FuncionarioMapaForm {
             telefoneFC.setValue(this.funcionario.getTelefone());
             emailFC.setValue(this.funcionario.getEmail());
             senhaFC.setValue(this.funcionario.getSenha());
+            estadosCombo.setValue(this.funcionario.getLocalizacao());
         } else {
             idInput.setVisible(false);
             idInput.setManaged(false);
+            estadosCombo.setValue(null);
         }
     }
 
