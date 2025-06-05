@@ -41,6 +41,13 @@ public class NavbarController {
             this.layout.setRota("prestador");
         });
         menu.getItems().add(mItemPrestador);
+
+        MenuItem  mItemVeiculo= new MenuItem("Veiculo");
+        mItemVeiculo.setOnAction(e -> {
+            this.layout.setRota("veiculo");
+        });
+        menu.getItems().add(mItemVeiculo);
+
         navbar.getMenus().addAll(menu);
     }
 

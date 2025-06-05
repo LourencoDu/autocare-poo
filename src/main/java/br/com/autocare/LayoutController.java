@@ -4,6 +4,7 @@ import br.com.autocare.FuncionarioMapa.FuncionarioMapaController;
 import br.com.autocare.model.FuncionarioMapa;
 import br.com.autocare.prestador.PrestadorController;
 import br.com.autocare.usuario.UsuarioController;
+import br.com.autocare.veiculo.VeiculoController;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
@@ -42,6 +43,7 @@ public class LayoutController {
             case "usuario" -> this.container.setCenter((new UsuarioController()).show());
             case "funcionariomapa" -> this.container.setCenter((new FuncionarioMapaController()).show());
             case "prestador" -> this.container.setCenter((new PrestadorController()).show());
+            case "veiculo" -> this.container.setCenter((new VeiculoController()).show());
             case "exemplo" -> this.container.setCenter(new Label("Exemplo"));
         }
     }
