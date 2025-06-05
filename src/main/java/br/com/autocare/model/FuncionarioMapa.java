@@ -166,19 +166,4 @@ public class FuncionarioMapa extends Model implements Serializable {
 
         return false;
     }
-
-    private void salvarLista(ArrayList<Model> lista) {
-        try {
-            File arq = new File(CAMINHO_ARQUIVO);
-            if (!arq.exists()) {
-                arq.createNewFile();
-            }
-            ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(arq));
-            oos.writeObject(lista);
-            oos.close();
-            System.out.println("Lista salva com sucesso.");
-        } catch (IOException e) {
-            System.err.println("Erro ao salvar lista: " + e.getMessage());
-        }
-    }
 }

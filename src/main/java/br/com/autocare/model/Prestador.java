@@ -5,10 +5,8 @@ import java.util.ArrayList;
 import java.util.Objects;
 import java.util.UUID;
 
-public class Prestador extends Model implements Serializable {
+public class Prestador extends Model {
     private static final long serialVersionUID = 1L;
-
-    private static final String CAMINHO_ARQUIVO = "prestador.dat";
 
     private String id;
     private String nomeOficina;
@@ -16,14 +14,8 @@ public class Prestador extends Model implements Serializable {
     private String email;
     private String senha;
 
-    public Prestador() {}
-
-    public Prestador(String id, String nomeOficina,  String cep, String email, String senha) {
-        this.id = id;
-        this.nomeOficina = nomeOficina;
-        this.cep = cep;
-        this.email = email;
-        this.senha = senha;
+    public Prestador() {
+        this.CAMINHO_ARQUIVO = "prestador.dat";
     }
 
     public String getId() {
@@ -72,22 +64,6 @@ public class Prestador extends Model implements Serializable {
     }
 
     @Override
-    public ArrayList<Model> select() {
-        ArrayList<Model> listaPrestador = new ArrayList<>();
-        try  {
-            File arq = new File(CAMINHO_ARQUIVO);
-            if (arq.exists()) {
-                ObjectInputStream ois = new ObjectInputStream(new FileInputStream(CAMINHO_ARQUIVO));
-                listaPrestador = (ArrayList<Model>) ois.readObject();
-                ois.close();
-            }
-        } catch (IOException | ClassNotFoundException e) {
-            System.err.println("Erro ao ler lista: " + e.getMessage());
-        }
-        return listaPrestador;
-    }
-
-    @Override
     public Prestador save() {
         if(this.id == null) {
             this.id = UUID.randomUUID().toString();
@@ -97,15 +73,6 @@ public class Prestador extends Model implements Serializable {
         }
 
         return this;
-    }
-
-    public Model insert(Model model) {
-        ArrayList<Model> listaPrestador = this.select();
-        listaPrestador.add(model);
-
-        this.salvarLista(listaPrestador);
-
-        return model;
     }
 
     public Model update(Model model) {
@@ -156,22 +123,5 @@ public class Prestador extends Model implements Serializable {
         }
 
         return false;
-    }
-
-
-    private void salvarLista(ArrayList<Model> listaPrestador) {
-        FileOutputStream f;
-        try {
-            File arq = new File(CAMINHO_ARQUIVO);
-            if (!arq.exists()) {
-                arq.createNewFile();
-            }
-            ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(arq));
-            oos.writeObject(listaPrestador);
-            oos.close();
-            System.out.println("Lista salva com sucesso.");
-        } catch (IOException e) {
-            System.err.println("Erro ao salvar lista: " + e.getMessage());
-        }
     }
 }
