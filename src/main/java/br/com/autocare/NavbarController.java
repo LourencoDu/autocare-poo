@@ -36,6 +36,11 @@ public class NavbarController {
         });
         menu.getItems().add(mItemfuncionariomapa);
 
+        MenuItem  mItemPrestador= new MenuItem("Prestador");
+        mItemPrestador.setOnAction(e -> {
+            this.layout.setRota("prestador");
+        });
+        menu.getItems().add(mItemPrestador);
         navbar.getMenus().addAll(menu);
     }
 
