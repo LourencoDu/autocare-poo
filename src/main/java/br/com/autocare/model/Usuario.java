@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.Objects;
 import java.util.UUID;
 
-public class Usuario implements Serializable, Model {
+public class Usuario extends Model implements Serializable {
     private static final long serialVersionUID = 1L;
 
     private static final String CAMINHO_ARQUIVO = "usuario.dat";

@@ -2,8 +2,8 @@ package br.com.autocare.model;
 
 import java.util.ArrayList;
 
-public interface Model {
-    ArrayList<Model> select();
-    Model save();
-    boolean delete();
+public abstract class Model {
+    abstract ArrayList<Model> select();
+    abstract Model save();
+    abstract boolean delete();
 }

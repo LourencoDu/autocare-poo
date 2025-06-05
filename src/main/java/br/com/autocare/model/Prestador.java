@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.Objects;
 import java.util.UUID;
 
-public class Prestador implements Serializable, Model {
+public class Prestador extends Model implements Serializable {
     private static final long serialVersionUID = 1L;
 
     private static final String CAMINHO_ARQUIVO = "prestador.dat";
